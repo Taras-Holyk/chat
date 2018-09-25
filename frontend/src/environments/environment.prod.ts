@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  api_url: 'http://app.chat.loc/api/v1'
 };

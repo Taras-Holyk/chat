@@ -1,0 +1,39 @@
+<form [formGroup]="registrationForm" (ngSubmit)="submit()">
+  <div>
+    <label for="name">Name</label>
+    <input id="name" name="name" formControlName="name" type="text" />
+    <div *ngIf="registrationForm.controls['name'].invalid && registrationForm.controls['name'].touched">
+      Invalid name
+    </div>
+  </div>
+
+  <div>
+    <label for="email">Email</label>
+    <input id="email" name="email" formControlName="email" type="email" />
+    <div *ngIf="registrationForm.controls['email'].invalid && registrationForm.controls['email'].touched">
+      Invalid email
+    </div>
+    <div *ngIf="errors && errors.email">
+      Invalid email
+    </div>
+  </div>
+
+  <div>
+    <label for="password">Password</label>
+    <input id="password" name="password" formControlName="password" type="password" />
+    <div *ngIf="registrationForm.controls['password'].invalid && registrationForm.controls['password'].touched">
+      Invalid password
+    </div>
+  </div>
+
+  <div>
+    <label for="password_confirmation">Password</label>
+    <input id="password_confirmation" name="password_confirmation" formControlName="password_confirmation" type="password" />
+    <div *ngIf="registrationForm.controls['password_confirmation'].invalid && registrationForm.controls['password_confirmation'].touched">
+      Passwords don't match
+    </div>
+  </div>
+
+  <button type="submit">Register</button>
+</form>
+<div *ngIf="message">{{message}}</div>

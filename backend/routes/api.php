@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,6 +11,11 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('v1')->group(function () {
+    $this->post('login', 'Auth\LoginController@login');
+    $this->post('register', 'Auth\RegisterController@register');
+
+    Route::middleware('auth:api')->group(function () {
+        $this->post('logout', 'Auth\LoginController@logout')->name('logout');
+    });
 });
