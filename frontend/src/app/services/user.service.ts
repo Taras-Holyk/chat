@@ -19,4 +19,18 @@ export class UserService {
   logout() {
     return this.http.post<any>(`${environment.api_url}/logout`, {});
   }
+
+  getUsersList(page?: number, limit?: number, search?: string) {
+    let url = '';
+    if (page) {
+      url = `${url}page=${page}`;
+    }
+    if (limit) {
+      url = `${url}&limit=${limit}`;
+    }
+    if (search) {
+      url = `${url}&search=${search}`;
+    }
+    return this.http.get<any>(`${environment.api_url}/users?${url}`);
+  }
 }

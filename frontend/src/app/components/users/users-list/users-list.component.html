@@ -1,0 +1,9 @@
+<form [formGroup]="searchForm" (submit)="search()" >
+  <input type="text" formControlName="keyword">
+  <button type="submit">Send</button>
+</form>
+<app-user *ngFor="let user of users" [user]="user"></app-user>
+<a *ngFor="let link of links"
+   [routerLink]="['/users']"
+   [queryParams]="link"
+>{{link.page}}</a>

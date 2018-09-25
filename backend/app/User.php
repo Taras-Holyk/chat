@@ -6,10 +6,12 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Jenssegers\Mongodb\Auth\User as Authenticatable;
+use App\Traits\MongoElastiquentTrait;
 
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
+    use MongoElastiquentTrait;
 
     /**
      * The attributes that are mass assignable.
