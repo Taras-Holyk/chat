@@ -12,10 +12,12 @@
 */
 
 Route::prefix('v1')->group(function () {
-    $this->post('login', 'Auth\LoginController@login');
+    $this->post('login', 'Auth\LoginController@login')->name('login');
     $this->post('register', 'Auth\RegisterController@register');
 
     Route::middleware('auth:api')->group(function () {
         $this->post('logout', 'Auth\LoginController@logout')->name('logout');
+
+        $this->get('users', 'UserController@index');
     });
 });
