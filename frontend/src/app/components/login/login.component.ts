@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from '../../services/user.service';
 import {LocalStorageService} from '../../services/local-storage.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,8 @@ import {LocalStorageService} from '../../services/local-storage.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   constructor(private userService: UserService,
-              private localStorageService: LocalStorageService) {
+              private localStorageService: LocalStorageService,
+              private router: Router) {
     this.loginForm = new FormGroup({
       'email': new FormControl('', [Validators.required, Validators.email]),
       'password': new FormControl('', Validators.required)
@@ -29,6 +31,7 @@ export class LoginComponent implements OnInit {
         .subscribe(response => {
           this.localStorageService.set('userAuthToken', response.meta.original.access_token);
           this.localStorageService.set('authUser', response.data);
+          this.router.navigate(['']);
         });
     } else {
       console.log('Validation error');
