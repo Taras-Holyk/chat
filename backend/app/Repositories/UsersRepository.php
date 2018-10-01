@@ -5,8 +5,8 @@ namespace App\Repositories;
 use App\Contracts\Repositories\UsersRepositoryInterface;
 use App\Contracts\Repositories\ViewableInterface;
 use App\User;
-use Elasticquent\ElasticquentCollection;
 use Elasticquent\ElasticquentResultCollection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class UsersRepository implements UsersRepositoryInterface, ViewableInterface
 {
@@ -22,13 +22,17 @@ class UsersRepository implements UsersRepositoryInterface, ViewableInterface
         return $this->model->where('id', $id)->first();
     }
 
-    public function all() : ElasticquentCollection
+    public function paginate(int $limit) : LengthAwarePaginator
     {
-        return $this->model->get();
+        return $this->model->paginate($limit);
     }
 
-    public function search(string $keyword) : ElasticquentResultCollection
+    public function search(string $keyword, int $offset, int $limit) : ElasticquentResultCollection
     {
-        return $this->model->search($keyword);
+        return $this->model->searchByQuery([
+            'match' => [
+                'name' => $keyword
+            ]
+        ], null, null, $limit, $offset);
     }
 }

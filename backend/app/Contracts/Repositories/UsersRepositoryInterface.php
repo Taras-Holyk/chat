@@ -2,12 +2,12 @@
 
 namespace App\Contracts\Repositories;
 
-use Elasticquent\ElasticquentCollection;
 use Elasticquent\ElasticquentResultCollection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface UsersRepositoryInterface
 {
-    public function all() : ElasticquentCollection;
+    public function search(string $keyword, int $offset, int $limit) : ElasticquentResultCollection;
 
-    public function search(string $keyword) : ElasticquentResultCollection;
+    public function paginate(int $limit) : LengthAwarePaginator;
 }
