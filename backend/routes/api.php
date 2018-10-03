@@ -19,5 +19,10 @@ Route::prefix('v1')->group(function () {
         $this->post('logout', 'Auth\LoginController@logout')->name('logout');
 
         $this->get('users', 'UserController@index');
+
+        Route::prefix('chats')->group(function () {
+            $this->get('', 'ChatController@index');
+            $this->get('{chatUserId}', 'ChatController@show');
+        });
     });
 });

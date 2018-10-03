@@ -19,7 +19,7 @@ class UsersRepository implements UsersRepositoryInterface, ViewableInterface
 
     public function getById(string $id) : User
     {
-        return $this->model->where('id', $id)->first();
+        return $this->model->where('_id', $id)->first();
     }
 
     public function paginate(int $limit) : LengthAwarePaginator
