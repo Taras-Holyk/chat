@@ -14,3 +14,13 @@
 Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('chat.{chat}', function ($user, \App\Models\Chat $chat) {
+    if (in_array($user->id, $chat->users)) {
+        return [
+            'id' => $user->id,
+            'name' => $user->name
+        ];
+    }
+    abort(403);
+});

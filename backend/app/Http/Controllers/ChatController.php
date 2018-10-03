@@ -10,6 +10,12 @@ use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
+    /**
+     * @param $chatUserId
+     * @param UsersRepositoryInterface $usersRepository
+     * @param ChatsRepositoryInterface $chatsRepository
+     * @return Chat
+     */
     public function show(
         $chatUserId,
         UsersRepositoryInterface $usersRepository,
@@ -26,6 +32,11 @@ class ChatController extends Controller
         return new Chat($chat ?? []);
     }
 
+    /**
+     * @param Request $request
+     * @param ChatsRepositoryInterface $chatsRepository
+     * @return Chats
+     */
     public function index(
         Request $request,
         ChatsRepositoryInterface $chatsRepository
