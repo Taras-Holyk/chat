@@ -22,6 +22,13 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'chats',
+    loadChildren: './components/chats/chats.module#ChatsModule',
+    canActivate: [
+      AuthGuard
+    ]
+  },
+  {
     path: 'login',
     component: LoginComponent
   },

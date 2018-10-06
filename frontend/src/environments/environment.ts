@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  api_url: 'http://app.chat.loc/api/v1'
+  api_url: 'http://app.chat.loc/api/v1',
+  sockets_url: 'http://app.chat.loc:6001'
 };
 
 /*

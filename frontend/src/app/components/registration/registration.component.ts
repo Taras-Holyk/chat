@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {passwordConfirmed} from '../../validators/password-confirmed';
 import {UserService} from '../../services/user.service';
-import {catchError} from 'rxjs/operators';
-import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-registration',
@@ -13,7 +11,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 export class RegistrationComponent implements OnInit {
   registrationForm: FormGroup;
   message = '';
-  errors: Object;
+  errors: any;
   constructor(private formBuilder: FormBuilder,
               private userService: UserService) {
     this.registrationForm = this.formBuilder.group({
