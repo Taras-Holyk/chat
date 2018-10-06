@@ -9,7 +9,15 @@ export class ChatsService {
 
   constructor(private http: HttpClient) { }
 
-  getChat(userId: string) {
-    return this.http.get<any>(`${environment.api_url}/chats/${userId}`);
+  createChat(userId: string) {
+    return this.http.post<any>(`${environment.api_url}/chats/${userId}`, {});
+  }
+
+  getChat(chatId: string) {
+    return this.http.get<any>(`${environment.api_url}/chats/${chatId}`);
+  }
+
+  getMessages(chatId: string) {
+    return this.http.get<any>(`${environment.api_url}/chats/${chatId}/relationships/messages`);
   }
 }

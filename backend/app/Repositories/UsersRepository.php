@@ -17,7 +17,7 @@ class UsersRepository implements UsersRepositoryInterface, ViewableInterface
         $this->model = $model;
     }
 
-    public function getById(string $id) : User
+    public function getById(string $id)
     {
         return $this->model->where('_id', $id)->first();
     }

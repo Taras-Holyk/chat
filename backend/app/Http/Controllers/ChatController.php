@@ -6,17 +6,27 @@ use App\Contracts\Repositories\ChatsRepositoryInterface;
 use App\Contracts\Repositories\UsersRepositoryInterface;
 use App\Http\Resources\Chat;
 use App\Http\Resources\Chats;
+use App\Models\Chat as ChatModel;
 use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
+    /**
+     * @param ChatModel $chat
+     * @return Chat
+     */
+    public function show(
+        ChatModel $chat
+    ) {
+        return new Chat($chat ?? []);
+    }
     /**
      * @param $chatUserId
      * @param UsersRepositoryInterface $usersRepository
      * @param ChatsRepositoryInterface $chatsRepository
      * @return Chat
      */
-    public function show(
+    public function store(
         $chatUserId,
         UsersRepositoryInterface $usersRepository,
         ChatsRepositoryInterface $chatsRepository

@@ -22,7 +22,8 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('chats')->group(function () {
             $this->get('', 'ChatController@index');
-            $this->get('{chatUserId}', 'ChatController@show');
+            $this->get('{chat}', 'ChatController@show');
+            $this->post('{chatUserId}', 'ChatController@store');
             $this->post('{chat}/relationships/messages', 'MessageController@store');
         });
     });
