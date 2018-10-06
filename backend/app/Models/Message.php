@@ -5,16 +5,16 @@ namespace App\Models;
 use Jenssegers\Mongodb\Eloquent\Model;
 use App\Traits\MongoElastiquentTrait;
 
-class Chat extends Model
+class Message extends Model
 {
     use MongoElastiquentTrait;
 
     protected $fillable = [
-        'users'
+        'chat_id', 'user_id', 'text'
     ];
 
-    public function messages()
+    public function user()
     {
-        return $this->hasMany('App\Models\Message', 'chat_id', '_id');
+        return $this->belongsTo('App\User', 'user_id', 'id');
     }
 }

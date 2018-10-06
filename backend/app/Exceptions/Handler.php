@@ -57,7 +57,7 @@ class Handler extends ExceptionHandler
                 return response()->json([
                     'errors' => [
                         'code' => 404,
-                        'message' => 'Resource not found',
+                        'title' => 'Resource not found',
                     ],
                 ], 404);
             }
@@ -65,7 +65,7 @@ class Handler extends ExceptionHandler
                 return response()->json([
                     'errors' => [
                         'code' => 404,
-                        'message' => 'Page not found',
+                        'title' => 'Page not found',
                     ],
                 ], 404);
             }
@@ -73,7 +73,7 @@ class Handler extends ExceptionHandler
                 return response()->json([
                     'errors' => [
                         'code' => 403,
-                        'message' => 'Method not allowed',
+                        'title' => 'Method not allowed',
                     ],
                 ], 403);
             }
@@ -81,14 +81,14 @@ class Handler extends ExceptionHandler
                 return response()->json([
                     'errors' => [
                         'code' => 400,
-                        'message' => 'Files size is too large',
+                        'title' => 'Files size is too large',
                     ],
                 ], 400);
             }
             $json = [
                 'errors' => [
                     'code' => $exception->getCode(),
-                    'message' => $exception->getMessage(),
+                    'title' => $exception->getMessage(),
                 ],
             ];
             if (auth()->check()) {
