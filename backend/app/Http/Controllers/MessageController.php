@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Repositories\MessagesRepositoryInterface;
+use App\Events\MessageCreated;
 use App\Http\Requests\CreateMessageRequest;
 use App\Http\Resources\Message;
 use App\Http\Resources\Messages;
@@ -20,6 +21,10 @@ class MessageController extends Controller
             'user_id' => auth()->id(),
             'text' => $request->input('text')
         ]);
+
+        if ($message) {
+            broadcast(new MessageCreated($message))->toOthers();
+        }
 
         return new Message($message ?? []);
     }
