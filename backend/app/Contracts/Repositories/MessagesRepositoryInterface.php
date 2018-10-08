@@ -10,5 +10,5 @@ interface MessagesRepositoryInterface
 {
     public function getAllChatMessages(Chat $chat, int $limit) : LengthAwarePaginator;
 
-    public function store(Chat $chat, array $data) : Message;
+    public function store(array $data) : Message;
 }

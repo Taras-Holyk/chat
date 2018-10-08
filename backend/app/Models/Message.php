@@ -15,11 +15,11 @@ class Message extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id', 'id');
+        return $this->belongsTo('App\User', 'user_id', '_id');
     }
 
     public function chat()
     {
-        return $this->belongsTo('App\Models\Chat', 'chat_id', 'id');
+        return $this->belongsTo('App\Models\Chat', 'chat_id', '_id');
     }
 }

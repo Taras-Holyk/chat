@@ -17,7 +17,8 @@ class MessageController extends Controller
         CreateMessageRequest $request,
         MessagesRepositoryInterface $messagesRepository
     ) {
-        $message = $messagesRepository->store($chat, [
+        $message = $messagesRepository->store([
+            'chat_id' => $chat->id,
             'user_id' => auth()->id(),
             'text' => $request->input('text')
         ]);

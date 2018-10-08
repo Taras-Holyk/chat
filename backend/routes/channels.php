@@ -22,5 +22,6 @@ Broadcast::channel('chat.{chat}', function ($user, \App\Models\Chat $chat) {
             'name' => $user->name
         ];
     }
-    abort(403);
+
+    return false;
 });

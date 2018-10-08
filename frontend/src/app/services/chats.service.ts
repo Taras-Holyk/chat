@@ -20,4 +20,8 @@ export class ChatsService {
   getMessages(chatId: string) {
     return this.http.get<any>(`${environment.api_url}/chats/${chatId}/relationships/messages`);
   }
+
+  sendMessage(chatId: string, text: string) {
+    return this.http.post<any>(`${environment.api_url}/chats/${chatId}/relationships/messages`, {text});
+  }
 }

@@ -16,7 +16,7 @@ class MessagesRepository implements MessagesRepositoryInterface
         $this->model = $model;
     }
 
-    public function store(Chat $chat, array $data) : Message
+    public function store(array $data) : Message
     {
         return $this->model->create($data);
     }
