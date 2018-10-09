@@ -24,6 +24,7 @@ class MessagesRepository implements MessagesRepositoryInterface
     public function getAllChatMessages(Chat $chat, int $limit) : LengthAwarePaginator
     {
         return $chat->messages()
+            ->orderBy('created_at', 'DESC')
             ->paginate($limit);
     }
 }

@@ -1,8 +1,9 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ChatsService} from '../../../services/chats.service';
 import {takeWhile} from 'rxjs/operators';
 import {SocketsService} from '../../../services/sockets.service';
+import {BroadcastService} from '../../../services/broadcast.service';
 
 @Component({
   selector: 'app-message-form',
@@ -13,16 +14,16 @@ export class MessageFormComponent implements OnInit, OnDestroy {
   @Input() chat;
   messageForm: FormGroup;
   alive$ = true;
+  @Output() addEvent = new EventEmitter();
   constructor(private formBuilder: FormBuilder,
               private chatsService: ChatsService,
-              private socketsService: SocketsService) { }
+              private socketsService: SocketsService,
+              private broadcastService: BroadcastService) { }
 
   ngOnInit() {
     this.messageForm = this.formBuilder.group({
       'text': ['', [Validators.required]]
     });
-
-    this.socketsService.listenChannelEvent(`chat.${this.chat._id}`, '.message.created');
   }
 
   ngOnDestroy() {
@@ -35,7 +36,8 @@ export class MessageFormComponent implements OnInit, OnDestroy {
     this.chatsService.sendMessage(this.chat._id, this.messageForm.get('text').value)
       .pipe(takeWhile(() => this.alive$))
       .subscribe(result => {
-        console.log(result);
+        this.messageForm.reset();
+        this.broadcastService.broadcast('message-created', result.data);
       });
   }
 }

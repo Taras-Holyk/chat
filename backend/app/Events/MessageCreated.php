@@ -2,7 +2,8 @@
 
 namespace App\Events;
 
-use App\Models\Message;
+use App\Http\Resources\Message;
+use App\Models\Message as MessageModel;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -16,14 +17,16 @@ class MessageCreated implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
     
     public $message;
+    private $chatId;
 
     /**
      * MessageCreated constructor.
-     * @param Message $message
+     * @param MessageModel $message
      */
-    public function __construct(Message $message)
+    public function __construct(MessageModel $message)
     {
-        $this->message = $message;
+        $this->chatId = $message->chat->id;
+        $this->message = new Message($message);
     }
 
     /**
@@ -33,7 +36,7 @@ class MessageCreated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel("chat.{$this->message->chat->id}");
+        return new PresenceChannel("chat.{$this->chatId}");
     }
 
     public function broadcastAs()
