@@ -14,6 +14,8 @@ export class MessagesListComponent implements OnInit, OnDestroy {
   messages: Message[];
   @Input() chat;
   alive$ = true;
+  lastMessageDate: string;
+  blockRequest: boolean;
 
   constructor(private chatsService: ChatsService,
               private broadcastService: BroadcastService,
@@ -33,11 +35,7 @@ export class MessagesListComponent implements OnInit, OnDestroy {
       this.add(result);
     });
 
-    this.chatsService.getMessages(this.chat._id)
-      .pipe(takeWhile(() => this.alive$))
-      .subscribe(result => {
-        this.messages = result.data.reverse();
-      });
+    this.getMessages();
   }
 
   add(message: Message) {
@@ -46,5 +44,40 @@ export class MessagesListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.alive$ = false;
+  }
+
+  onScrollMessages(event) {
+    const offset = event.target.scrollTop;
+    if (offset <= 50 && !this.blockRequest) {
+      this.blockRequest = true;
+      this.chatsService.getMessages(this.chat._id, 10, this.lastMessageDate || '')
+        .pipe(takeWhile(() => this.alive$))
+        .subscribe(result => {
+          const messages = result.data.reverse();
+          this.messages = [...messages, ...this.messages];
+
+          const lastMessage = messages[0];
+          if (lastMessage) {
+            this.lastMessageDate = lastMessage.created_at;
+          }
+          this.blockRequest = false;
+        });
+    }
+  }
+
+  getMessages() {
+    this.chatsService.getMessages(this.chat._id, 10, this.lastMessageDate || '')
+      .pipe(takeWhile(() => this.alive$))
+      .subscribe(result => {
+        this.messages = result.data.reverse();
+
+        const lastMessage = this.messages[0];
+        if (lastMessage) {
+          this.lastMessageDate = lastMessage.created_at;
+        }
+
+        const element = document.getElementById('messages-list-container');
+        setTimeout(() => element.scrollTop = element.scrollHeight, 100);
+      });
   }
 }

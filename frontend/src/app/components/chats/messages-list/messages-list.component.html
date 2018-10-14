@@ -1,1 +1,3 @@
-<app-message *ngFor="let message of messages" [message]="message"></app-message>
+<div id="messages-list-container" class="messages" (scroll)="onScrollMessages($event)">
+  <app-message *ngFor="let message of messages" [message]="message"></app-message>
+</div>

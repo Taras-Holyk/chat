@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {takeWhile} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
 import {ChatsService} from '../../../services/chats.service';

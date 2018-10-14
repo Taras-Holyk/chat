@@ -17,8 +17,12 @@ export class ChatsService {
     return this.http.get<any>(`${environment.api_url}/chats/${chatId}`);
   }
 
-  getMessages(chatId: string) {
-    return this.http.get<any>(`${environment.api_url}/chats/${chatId}/relationships/messages`);
+  getMessages(chatId: string, limit: number = 10, lastMessageDate: string = '') {
+    let url = `${environment.api_url}/chats/${chatId}/relationships/messages?limit=${limit}`;
+    if (lastMessageDate) {
+      url += `&last_message_date=${lastMessageDate}`;
+    }
+    return this.http.get<any>(url);
   }
 
   sendMessage(chatId: string, text: string) {

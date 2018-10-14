@@ -8,7 +8,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface MessagesRepositoryInterface
 {
-    public function getAllChatMessages(Chat $chat, int $limit) : LengthAwarePaginator;
+    public function getAllChatMessages(Chat $chat, int $limit, string $lastMessageDate = null) : LengthAwarePaginator;
 
     public function store(array $data) : Message;
 }

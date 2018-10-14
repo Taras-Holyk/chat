@@ -35,7 +35,11 @@ class MessageController extends Controller
         Request $request,
         MessagesRepositoryInterface $messagesRepository
     ) {
-        $messages = $messagesRepository->getAllChatMessages($chat, $request->input('limit', 10));
+        $messages = $messagesRepository->getAllChatMessages(
+            $chat,
+            $request->input('limit', 10),
+            $request->input('last_message_date')
+        );
 
         return new Messages($messages ?? []);
     }

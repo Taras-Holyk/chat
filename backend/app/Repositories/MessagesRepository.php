@@ -5,7 +5,9 @@ namespace App\Repositories;
 use App\Contracts\Repositories\MessagesRepositoryInterface;
 use App\Models\Chat;
 use App\Models\Message;
+use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use MongoDB\BSON\UTCDateTime;
 
 class MessagesRepository implements MessagesRepositoryInterface
 {
@@ -21,10 +23,17 @@ class MessagesRepository implements MessagesRepositoryInterface
         return $this->model->create($data);
     }
 
-    public function getAllChatMessages(Chat $chat, int $limit) : LengthAwarePaginator
+    public function getAllChatMessages(Chat $chat, int $limit, string $lastMessageDate = null) : LengthAwarePaginator
     {
-        return $chat->messages()
-            ->orderBy('created_at', 'DESC')
-            ->paginate($limit);
+        $query = $chat->messages()
+            ->orderBy('created_at', 'DESC');
+
+        if ($lastMessageDate) {
+            $query->where('created_at', '<', new UTCDateTime(
+                Carbon::parse(str_replace(' ', '+', $lastMessageDate))->timestamp * 1000)
+            );
+        }
+
+        return $query->paginate($limit);
     }
 }
