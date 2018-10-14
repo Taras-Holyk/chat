@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Repositories\UsersRepositoryInterface;
+use App\Http\Resources\User;
 use App\Http\Resources\Users;
+use App\User as UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -28,5 +30,10 @@ class UserController extends Controller
         }
 
         return new Users($users);
+    }
+
+    public function show(UserModel $user)
+    {
+        return new User($user);
     }
 }

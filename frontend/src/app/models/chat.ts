@@ -1,4 +1,8 @@
+import {Message} from './message';
+import {User} from './user';
+
 export interface Chat {
   id: string;
-  users: string[];
+  user: User;
+  last_message: Message;
 }

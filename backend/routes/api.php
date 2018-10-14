@@ -18,7 +18,10 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:api')->group(function () {
         $this->post('logout', 'Auth\LoginController@logout')->name('logout');
 
-        $this->get('users', 'UserController@index');
+        Route::prefix('users')->group(function () {
+            $this->get('', 'UserController@index');
+            $this->get('{user}', 'UserController@show');
+        });
 
         Route::prefix('chats')->group(function () {
             $this->get('', 'ChatController@index');

@@ -20,7 +20,7 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.activatedRoute.params
       .pipe(takeWhile(() => this.alive$))
       .subscribe(params => {
-        this.getChat(params['user']);
+        this.getChat(params['chat']);
       });
   }
 
@@ -28,8 +28,8 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.alive$ = false;
   }
 
-  getChat(userId: string) {
-    this.chatsService.getChat(userId)
+  getChat(chatId: string) {
+    this.chatsService.getChat(chatId)
       .pipe(takeWhile(() => this.alive$))
       .subscribe(result => {
         this.chat = result.data;

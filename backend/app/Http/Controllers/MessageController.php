@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\Repositories\MessagesRepositoryInterface;
+use App\Events\ChatUpdated;
 use App\Events\MessageCreated;
 use App\Http\Requests\CreateMessageRequest;
 use App\Http\Resources\Message;
@@ -25,6 +26,7 @@ class MessageController extends Controller
 
         if ($message) {
             broadcast(new MessageCreated($message))->toOthers();
+            event(new ChatUpdated($message->chat));
         }
 
         return new Message($message ?? []);

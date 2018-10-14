@@ -29,11 +29,11 @@ export class MessageFormComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.alive$ = false;
 
-    this.socketsService.leaveChannel(`chat.${this.chat._id}`);
+    this.socketsService.leaveChannel(`chat.${this.chat.id}`);
   }
 
   send() {
-    this.chatsService.sendMessage(this.chat._id, this.messageForm.get('text').value)
+    this.chatsService.sendMessage(this.chat.id, this.messageForm.get('text').value)
       .pipe(takeWhile(() => this.alive$))
       .subscribe(result => {
         this.messageForm.reset();

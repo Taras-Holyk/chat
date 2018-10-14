@@ -17,6 +17,10 @@ export class ChatsService {
     return this.http.get<any>(`${environment.api_url}/chats/${chatId}`);
   }
 
+  getChats(limit = 10, page = 1) {
+    return this.http.get<any>(`${environment.api_url}/chats?limit=${limit}&page=${page}`);
+  }
+
   getMessages(chatId: string, limit: number = 10, lastMessageDate: string = '') {
     let url = `${environment.api_url}/chats/${chatId}/relationships/messages?limit=${limit}`;
     if (lastMessageDate) {

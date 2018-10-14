@@ -1,0 +1,28 @@
+header {
+  background-color: limegreen;
+  padding: 15px;
+  max-width: 768px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-end;
+
+  span {
+    margin-right: auto;
+    text-transform: capitalize;
+  }
+
+  a {
+    margin: 0 10px;
+    color: #000;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: #fff;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

@@ -11,18 +11,16 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
   styleUrls: ['./users-list.component.scss']
 })
 export class UsersListComponent implements OnInit, OnDestroy {
-  users: User[];
-  totalPages: number;
-  links: any = [];
+  users: User[] = [];
   page = 1;
   limit = 10;
   searchKeyword = '';
   alive$ = true;
   searchForm: FormGroup;
+  isEnabledShowMore = false;
   constructor(private userService: UserService,
               private activatedRoute: ActivatedRoute,
-              private formBuilder: FormBuilder,
-              private router: Router) { }
+              private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.searchForm = this.formBuilder.group({
@@ -42,25 +40,8 @@ export class UsersListComponent implements OnInit, OnDestroy {
   }
 
   setParams(params) {
-    if (params['page']) {
-      this.page = params['page'];
-    }
-    if (params['limit']) {
-      this.limit = params['limit'];
-    }
     if (params['search']) {
       this.searchKeyword = params['search'];
-    }
-  }
-
-  getPagination() {
-    this.links = [];
-    for (let i = 1; i <= this.totalPages; i++) {
-      const link = {'page': i, 'limit': this.limit};
-      if (this.searchKeyword) {
-        link['search'] = this.searchKeyword;
-      }
-      this.links.push(link);
     }
   }
 
@@ -68,18 +49,25 @@ export class UsersListComponent implements OnInit, OnDestroy {
     this.userService.getUsersList(this.page, this.limit, search)
       .pipe(takeWhile(() => this.alive$))
       .subscribe(result => {
-        this.users = result.data;
-        this.totalPages = result.meta.last_page;
-        this.getPagination();
+        this.users = [...this.users, ...result.data];
+
+        if (this.users.length >= result.meta.total) {
+          this.isEnabledShowMore = false;
+        } else {
+          this.isEnabledShowMore = true;
+        }
       });
   }
 
   search() {
+    this.users = [];
+    this.page = 1;
     this.searchKeyword = this.searchForm.get('keyword').value;
-    if (this.searchKeyword) {
-      this.router.navigate(['/users'], {'queryParams': {'search': this.searchKeyword}});
-    } else {
-      this.router.navigate(['/users']);
-    }
+    this.getUsers(this.searchKeyword);
+  }
+
+  showMore() {
+    this.page++;
+    this.getUsers(this.searchKeyword);
   }
 }

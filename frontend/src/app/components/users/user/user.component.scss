@@ -1,0 +1,31 @@
+:host {
+  display: block;
+  border: 1px solid lightgrey;
+  border-bottom: none;
+  padding: 10px;
+
+  &:last-child {
+    border-bottom: 1px solid lightgrey;
+  }
+}
+
+.users-list-item {
+  display: flex;
+  align-items: center;
+
+  &__info {
+    margin-right: auto;
+  }
+}
+
+.user-info {
+  &__name {
+    text-transform: capitalize;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  &__email {
+    color: gray;
+  }
+}

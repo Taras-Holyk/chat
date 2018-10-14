@@ -25,3 +25,10 @@ Broadcast::channel('chat.{chat}', function ($user, \App\Models\Chat $chat) {
 
     return false;
 });
+
+Broadcast::channel('chats.{user}', function ($user) {
+    return [
+        'id' => $user->id,
+        'name' => $user->name
+    ];
+});

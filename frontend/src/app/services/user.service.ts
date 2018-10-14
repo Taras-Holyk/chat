@@ -33,4 +33,8 @@ export class UserService {
     }
     return this.http.get<any>(`${environment.api_url}/users?${url}`);
   }
+
+  getUser(id: string) {
+    return this.http.get<any>(`${environment.api_url}/users/${id}`);
+  }
 }

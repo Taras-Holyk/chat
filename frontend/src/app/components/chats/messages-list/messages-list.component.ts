@@ -23,7 +23,7 @@ export class MessagesListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (typeof window['Echo'] !== 'undefined') {
-      window['Echo'].join(`chat.${this.chat._id}`)
+      window['Echo'].join(`chat.${this.chat.id}`)
         .listen('.message.created', (result) => {
           if (result.message.user.id !== this.localStorageService.get('authUser').id) {
             this.add(result.message);
@@ -38,46 +38,45 @@ export class MessagesListComponent implements OnInit, OnDestroy {
     this.getMessages();
   }
 
-  add(message: Message) {
-    this.messages.push(message);
-  }
-
   ngOnDestroy() {
     this.alive$ = false;
+  }
+
+  add(message: Message) {
+    this.messages.push(message);
   }
 
   onScrollMessages(event) {
     const offset = event.target.scrollTop;
     if (offset <= 50 && !this.blockRequest) {
       this.blockRequest = true;
-      this.chatsService.getMessages(this.chat._id, 10, this.lastMessageDate || '')
+      this.chatsService.getMessages(this.chat.id, 10, this.lastMessageDate || '')
         .pipe(takeWhile(() => this.alive$))
         .subscribe(result => {
           const messages = result.data.reverse();
           this.messages = [...messages, ...this.messages];
-
-          const lastMessage = messages[0];
-          if (lastMessage) {
-            this.lastMessageDate = lastMessage.created_at;
+          this.setLastMessageDate(messages[0]);
+          if (this.messages.length < result.meta.total) {
+            this.blockRequest = false;
           }
-          this.blockRequest = false;
         });
     }
   }
 
   getMessages() {
-    this.chatsService.getMessages(this.chat._id, 10, this.lastMessageDate || '')
+    this.chatsService.getMessages(this.chat.id, 10, this.lastMessageDate || '')
       .pipe(takeWhile(() => this.alive$))
       .subscribe(result => {
         this.messages = result.data.reverse();
-
-        const lastMessage = this.messages[0];
-        if (lastMessage) {
-          this.lastMessageDate = lastMessage.created_at;
-        }
-
+        this.setLastMessageDate(this.messages[0]);
         const element = document.getElementById('messages-list-container');
         setTimeout(() => element.scrollTop = element.scrollHeight, 100);
       });
+  }
+
+  setLastMessageDate(message: Message) {
+    if (message) {
+      this.lastMessageDate = message.created_at;
+    }
   }
 }

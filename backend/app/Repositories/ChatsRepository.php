@@ -33,6 +33,7 @@ class ChatsRepository implements ChatsRepositoryInterface, StorableInterface
     {
         return $this->model
             ->where('users', 'all', [$user->id])
+            ->whereHas('messages')
             ->paginate($limit);
     }
 }

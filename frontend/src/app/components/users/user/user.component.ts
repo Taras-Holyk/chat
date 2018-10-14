@@ -26,7 +26,7 @@ export class UserComponent implements OnInit, OnDestroy {
     this.chatsService.createChat(this.user.id)
       .pipe(takeWhile(() => this.alive$))
       .subscribe(result => {
-        this.router.navigate(['chats', result.data._id]);
+        this.router.navigate(['chats', result.data.id]);
       });
   }
 }

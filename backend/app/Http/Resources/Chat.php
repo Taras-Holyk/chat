@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Contracts\Repositories\UsersRepositoryInterface;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class Chat extends JsonResource
@@ -14,13 +15,22 @@ class Chat extends JsonResource
      */
     public function toArray($request)
     {
-        if (!$request->all()) {
+        if (!$this->resource) {
             return parent::toArray($request);
+        }
+
+        $usersRepository = app(UsersRepositoryInterface::class);
+        foreach ($this->users as $userId) {
+            if ($userId != auth()->id()) {
+                $user = $usersRepository->getById($userId);
+                break;
+            }
         }
 
         return [
             'id' => $this->id,
-            'users' => $this->users
+            'user' => new User($user),
+            'last_message' => new Message($this->resource->messages()->orderBy('created_at', 'DESC')->first())
         ];
     }
 }

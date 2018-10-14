@@ -1,0 +1,7 @@
+<header *ngIf="isVisible">
+  <span>{{user?.name}}</span>
+  <a [routerLink]="['']">Home</a>
+  <a [routerLink]="['/chats']">Chats</a>
+  <a [routerLink]="['/users']">Users</a>
+  <a href="javascript:;" (click)="logout()">Log Out</a>
+</header>

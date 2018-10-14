@@ -1,9 +1,8 @@
-<form [formGroup]="searchForm" (submit)="search()" >
-  <input type="text" formControlName="keyword">
-  <button type="submit">Send</button>
+<form [formGroup]="searchForm" (submit)="search()" class="users-search">
+  <input class="form-input users-search__input" type="text" formControlName="keyword">
+  <button class="form-button" type="submit">Search</button>
 </form>
-<app-user *ngFor="let user of users" [user]="user"></app-user>
-<a *ngFor="let link of links"
-   [routerLink]="['/users']"
-   [queryParams]="link"
->{{link.page}}</a>
+<div class="users-list">
+  <app-user *ngFor="let user of users" [user]="user"></app-user>
+</div>
+<a class="show-more" (click)="showMore()" *ngIf="isEnabledShowMore">Show More</a>
