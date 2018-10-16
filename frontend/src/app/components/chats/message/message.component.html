@@ -1,4 +1,4 @@
-<div>
-  <div>{{message.text}}</div>
-  <div>{{message.created_at}}</div>
+<div class="message" [ngClass]="{'right': authUser.id == message.user.id}">
+  <div class="message__text">{{message.text}}</div>
+  <div class="message__date"> {{message.user.name}} at {{message.created_at | date: 'd MMM, h:mm a'}} </div>
 </div>

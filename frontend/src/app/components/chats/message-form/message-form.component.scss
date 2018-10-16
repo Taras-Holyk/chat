@@ -1,0 +1,11 @@
+form {
+  margin-top: 15px;
+  textarea {
+    width: calc(100% - 22px);
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

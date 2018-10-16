@@ -23,9 +23,6 @@ export class ChatsListComponent implements OnInit, OnDestroy {
       window['Echo'].join(`chats.${this.localStorageService.get('authUser').id}`)
         .listen('.chat.updated', (result) => {
           this.chats.find(item => result.chat.id === item.id).last_message = result.chat.last_message;
-          // if (result.message.user.id !== this.localStorageService.get('authUser').id) {
-          //   this.add(result.message);
-          // }
         });
     }
 

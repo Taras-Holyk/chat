@@ -1,0 +1,21 @@
+.message {
+  background-color: #e8e8e8;
+  margin: 10px 100px 10px 0;
+  border-radius: 4px;
+  padding: 15px;
+  float: left;
+  display: block;
+
+  &.right {
+    float: right;
+    text-align: right;
+    margin-left: 100px;
+    margin-right: 0;
+  }
+
+  &__date {
+    color: gray;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+}

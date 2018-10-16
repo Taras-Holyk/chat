@@ -1,7 +1,4 @@
-<div *ngFor="let chat of chats">
-  <div [routerLink]="['/chats', chat.id]">
-    <div>{{chat.user.name}}</div>
-    <div>{{chat.last_message?.text}}</div>
-  </div>
+<div>
+  <app-chats-list-item *ngFor="let chat of chats" [chat]="chat"></app-chats-list-item>
 </div>
-<a (click)="showMore()" *ngIf="isEnabledShowMore">Show more</a>
+<a (click)="showMore()" *ngIf="isEnabledShowMore" class="show-more">Show more</a>

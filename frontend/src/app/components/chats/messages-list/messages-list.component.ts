@@ -16,6 +16,7 @@ export class MessagesListComponent implements OnInit, OnDestroy {
   alive$ = true;
   lastMessageDate: string;
   blockRequest: boolean;
+  limit = 15;
 
   constructor(private chatsService: ChatsService,
               private broadcastService: BroadcastService,
@@ -44,13 +45,16 @@ export class MessagesListComponent implements OnInit, OnDestroy {
 
   add(message: Message) {
     this.messages.push(message);
+
+    const element = document.getElementById('messages-list-container');
+    setTimeout(() => element.scrollTop = element.scrollHeight, 100);
   }
 
   onScrollMessages(event) {
     const offset = event.target.scrollTop;
     if (offset <= 50 && !this.blockRequest) {
       this.blockRequest = true;
-      this.chatsService.getMessages(this.chat.id, 10, this.lastMessageDate || '')
+      this.chatsService.getMessages(this.chat.id, this.limit, this.lastMessageDate || '')
         .pipe(takeWhile(() => this.alive$))
         .subscribe(result => {
           const messages = result.data.reverse();
@@ -64,7 +68,7 @@ export class MessagesListComponent implements OnInit, OnDestroy {
   }
 
   getMessages() {
-    this.chatsService.getMessages(this.chat.id, 10, this.lastMessageDate || '')
+    this.chatsService.getMessages(this.chat.id, this.limit, this.lastMessageDate || '')
       .pipe(takeWhile(() => this.alive$))
       .subscribe(result => {
         this.messages = result.data.reverse();

@@ -1,4 +1,6 @@
 <form (submit)="send()" [formGroup]="messageForm">
-  <input type="text" formControlName="text">
-  <button type="submit">Send</button>
+  <textarea formControlName="text" class="form-input" rows="3"></textarea>
+  <div class="buttons">
+    <button type="submit" class="form-input">Send</button>
+  </div>
 </form>

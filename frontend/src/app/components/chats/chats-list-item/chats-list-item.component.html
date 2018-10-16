@@ -1,0 +1,4 @@
+<a [routerLink]="['/chats', chat.id]" class="chat-info">
+  <div class="chat-info__user-name">{{chat.user.name}}</div>
+  <div class="chat-info__message">{{chat.last_message?.text}}</div>
+</a>
