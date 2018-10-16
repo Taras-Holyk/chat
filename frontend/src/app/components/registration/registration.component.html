@@ -1,39 +1,69 @@
 <form [formGroup]="registrationForm" (ngSubmit)="submit()">
   <div>
     <label for="name">Name</label>
-    <input id="name" name="name" formControlName="name" type="text" />
-    <div *ngIf="registrationForm.controls['name'].invalid && registrationForm.controls['name'].touched">
+    <input id="name" name="name" formControlName="name" type="text" class="form-input" />
+    <div
+      *ngIf="registrationForm.controls['name'].invalid && registrationForm.controls['name'].touched"
+      class="input-error"
+    >
       Invalid name
     </div>
   </div>
 
   <div>
     <label for="email">Email</label>
-    <input id="email" name="email" formControlName="email" type="email" />
-    <div *ngIf="registrationForm.controls['email'].invalid && registrationForm.controls['email'].touched">
+    <input id="email" name="email" formControlName="email" type="email" class="form-input" />
+    <div
+      *ngIf="registrationForm.controls['email'].invalid && registrationForm.controls['email'].touched"
+      class="input-error"
+    >
       Invalid email
     </div>
-    <div *ngIf="errors && errors.email">
+    <div
+      *ngIf="errors && errors.email"
+      class="input-error"
+    >
       Invalid email
     </div>
   </div>
 
   <div>
     <label for="password">Password</label>
-    <input id="password" name="password" formControlName="password" type="password" />
-    <div *ngIf="registrationForm.controls['password'].invalid && registrationForm.controls['password'].touched">
+    <input
+      id="password"
+      name="password"
+      formControlName="password"
+      type="password"
+      class="form-input"
+    />
+    <div
+      *ngIf="registrationForm.controls['password'].invalid && registrationForm.controls['password'].touched"
+      class="input-error"
+    >
       Invalid password
     </div>
   </div>
 
   <div>
     <label for="password_confirmation">Password</label>
-    <input id="password_confirmation" name="password_confirmation" formControlName="password_confirmation" type="password" />
-    <div *ngIf="registrationForm.controls['password_confirmation'].invalid && registrationForm.controls['password_confirmation'].touched">
+    <input
+      id="password_confirmation"
+      name="password_confirmation"
+      formControlName="password_confirmation"
+      type="password"
+      class="form-input"
+    />
+    <div
+      *ngIf="registrationForm.controls['password_confirmation'].invalid && registrationForm.controls['password_confirmation'].touched"
+      class="input-error"
+    >
       Passwords don't match
     </div>
   </div>
 
-  <button type="submit">Register</button>
+  <div class="buttons">
+    <a [routerLink]="['/login']">Login</a>
+    <button type="submit" class="form-button">Register</button>
+  </div>
 </form>
 <div *ngIf="message">{{message}}</div>

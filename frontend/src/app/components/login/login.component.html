@@ -1,20 +1,28 @@
 <form [formGroup]="loginForm" (ngSubmit)="submit()">
   <div>
     <label for="email">Email</label>
-    <input id="email" name="email" formControlName="email" type="text" />
-    <div *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched">
+    <input id="email" name="email" formControlName="email" type="text" class="form-input" />
+    <div
+      *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched"
+      class="input-error"
+    >
       Invalid email
     </div>
   </div>
 
   <div>
     <label for="password">Password</label>
-    <input id="password" name="password" formControlName="password" type="password" />
-    <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched">
+    <input id="password" name="password" formControlName="password" type="password" class="form-input" />
+    <div
+      *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched"
+      class="input-error"
+    >
       Invalid password
     </div>
   </div>
 
-  <button type="submit">Login</button>
+  <div class="buttons">
+    <a [routerLink]="['/register']">Registration</a>
+    <button type="submit" class="form-button">Login</button>
+  </div>
 </form>
-<a [routerLink]="['/register']">Registration</a>
