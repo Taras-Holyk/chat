@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ChatsService} from '../../../services/chats.service';
-import {takeWhile} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, takeWhile} from 'rxjs/operators';
 import {SocketsService} from '../../../services/sockets.service';
 import {BroadcastService} from '../../../services/broadcast.service';
 
@@ -24,6 +24,19 @@ export class MessageFormComponent implements OnInit, OnDestroy {
     this.messageForm = this.formBuilder.group({
       'text': ['', [Validators.required]]
     });
+
+    this.getTmpMessage();
+
+    this.messageForm.get('text').valueChanges
+      .pipe(
+        debounceTime(600),
+        distinctUntilChanged()
+      )
+      .subscribe(value => {
+        this.chatsService.sendTmpMessage(this.chat.id, value)
+          .pipe(takeWhile(() => this.alive$))
+          .subscribe();
+      });
   }
 
   ngOnDestroy() {
@@ -38,6 +51,14 @@ export class MessageFormComponent implements OnInit, OnDestroy {
       .subscribe(result => {
         this.messageForm.reset();
         this.broadcastService.broadcast('message-created', result.data);
+      });
+  }
+
+  getTmpMessage() {
+    this.chatsService.getTmpMessage(this.chat.id)
+      .pipe(takeWhile(() => this.alive$))
+      .subscribe(result => {
+        this.messageForm.get('text').setValue(result.text);
       });
   }
 }

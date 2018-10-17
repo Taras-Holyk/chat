@@ -29,6 +29,8 @@ Route::prefix('v1')->group(function () {
             $this->post('{chatUserId}', 'ChatController@store');
             $this->get('{chat}/relationships/messages', 'MessageController@index');
             $this->post('{chat}/relationships/messages', 'MessageController@store');
+            $this->get('{chat}/relationships/messages/temporary', 'MessageController@getTemporary');
+            $this->post('{chat}/relationships/messages/temporary', 'MessageController@temporaryStore');
         });
     });
 });

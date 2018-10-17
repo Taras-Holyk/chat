@@ -32,4 +32,12 @@ export class ChatsService {
   sendMessage(chatId: string, text: string) {
     return this.http.post<any>(`${environment.api_url}/chats/${chatId}/relationships/messages`, {text});
   }
+
+  sendTmpMessage(chatId: string, text: string) {
+    return this.http.post<any>(`${environment.api_url}/chats/${chatId}/relationships/messages/temporary`, {text});
+  }
+
+  getTmpMessage(chatId: string) {
+    return this.http.get<any>(`${environment.api_url}/chats/${chatId}/relationships/messages/temporary`);
+  }
 }

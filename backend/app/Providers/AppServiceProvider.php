@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Contracts\Services\RedisStorageServiceInterface;
 use App\Observers\UserObserver;
+use App\Services\RedisStorageService;
 use App\User;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(RedisStorageServiceInterface::class, function() {
+            return new RedisStorageService(app(Redis::class));
+        });
     }
 }
