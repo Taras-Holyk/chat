@@ -39,17 +39,15 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function login(Request $request)
+    public function login()
     {
         $credentials = request(['email', 'password']);
 
-        if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
-        }
+        $token = auth()->attempt($credentials);
 
-        return (new User(auth()->user()))->additional([
+        return $token ? (new User(auth()->user()))->additional([
             'meta' => $this->respondWithToken($token)
-        ]);
+        ]) : response()->json(['error' => 'Unauthorized'], 401);
     }
 
     public function logout()
@@ -57,11 +55,6 @@ class LoginController extends Controller
         auth()->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
-    }
-
-    public function refresh()
-    {
-        return $this->respondWithToken(auth()->refresh());
     }
 
     protected function respondWithToken($token)
