@@ -61,7 +61,7 @@ class RegisterController extends Controller
     public function register(RegisterRequest $request)
     {
         return $this->registered($request, $this->create($request->all()))
-            ?: redirect($this->redirectPath());
+            ?: abort(500, 'User not registered');
     }
 
     protected function registered(Request $request, $user)
