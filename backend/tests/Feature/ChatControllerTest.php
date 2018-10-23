@@ -112,6 +112,6 @@ class ChatControllerTest extends ControllerTestCase
                         ]
                     ]
                 ]
-            ]);;
+            ]);
     }
 }

@@ -20,6 +20,7 @@ class ChatController extends Controller
     ) {
         return new Chat($chat ?? []);
     }
+
     /**
      * @param $chatUserId
      * @param UsersRepositoryInterface $usersRepository

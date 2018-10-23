@@ -11,6 +11,11 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserController extends Controller
 {
+    /**
+     * @param Request $request
+     * @param UsersRepositoryInterface $usersRepository
+     * @return Users
+     */
     public function index(
         Request $request,
         UsersRepositoryInterface $usersRepository
@@ -32,6 +37,10 @@ class UserController extends Controller
         return new Users($users);
     }
 
+    /**
+     * @param UserModel $user
+     * @return User
+     */
     public function show(UserModel $user)
     {
         return new User($user);

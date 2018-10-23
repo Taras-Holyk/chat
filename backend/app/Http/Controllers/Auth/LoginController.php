@@ -39,6 +39,9 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * @return User|\Illuminate\Http\JsonResponse
+     */
     public function login()
     {
         $credentials = request(['email', 'password']);
@@ -50,6 +53,9 @@ class LoginController extends Controller
         ]) : response()->json(['error' => 'Unauthorized'], 401);
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function logout()
     {
         auth()->logout();

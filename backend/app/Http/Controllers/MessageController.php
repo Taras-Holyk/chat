@@ -15,6 +15,13 @@ use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
+    /**
+     * @param Chat $chat
+     * @param CreateMessageRequest $request
+     * @param MessagesRepositoryInterface $messagesRepository
+     * @param RedisStorageServiceInterface $storage
+     * @return Message
+     */
     public function store(
         Chat $chat,
         CreateMessageRequest $request,
@@ -37,6 +44,12 @@ class MessageController extends Controller
         return new Message($message ?? []);
     }
 
+    /**
+     * @param Chat $chat
+     * @param Request $request
+     * @param MessagesRepositoryInterface $messagesRepository
+     * @return Messages
+     */
     public function index(
         Chat $chat,
         Request $request,
@@ -51,6 +64,12 @@ class MessageController extends Controller
         return new Messages($messages ?? []);
     }
 
+    /**
+     * @param Chat $chat
+     * @param StoreTemporaryMessageRequest $request
+     * @param RedisStorageServiceInterface $storage
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function temporaryStore(
         Chat $chat,
         StoreTemporaryMessageRequest $request,
@@ -63,6 +82,11 @@ class MessageController extends Controller
         ], 201);
     }
 
+    /**
+     * @param Chat $chat
+     * @param RedisStorageServiceInterface $storage
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getTemporary(
         Chat $chat,
         RedisStorageServiceInterface $storage

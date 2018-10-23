@@ -58,6 +58,9 @@ class RegisterController extends Controller
         ]);
     }
 
+    /**
+     * @param RegisterRequest $request
+     */
     public function register(RegisterRequest $request)
     {
         return $this->registered($request, $this->create($request->all()))
