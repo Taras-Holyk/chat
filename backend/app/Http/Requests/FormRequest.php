@@ -30,10 +30,11 @@ abstract class FormRequest extends LaravelFormRequest
      *
      * @param Validator $validator
      */
-    protected function failedValidation(Validator $validator)
+    public function failedValidation(Validator $validator)
     {
         $errors = (new ValidationException($validator))->errors();
-        throw new HttpResponseException(response()->json(['errors' => $errors
+        throw new HttpResponseException(response()->json([
+            'errors' => $errors
         ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY));
     }
 }
