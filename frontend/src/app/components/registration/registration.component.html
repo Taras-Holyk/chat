@@ -1,3 +1,4 @@
+<div *ngIf="message" class="text-green">{{message}}</div>
 <form [formGroup]="registrationForm" (ngSubmit)="submit()">
   <div>
     <label for="name">Name</label>
@@ -7,6 +8,12 @@
       class="input-error"
     >
       Invalid name
+    </div>
+    <div
+      *ngIf="errors['name']"
+      class="input-error"
+    >
+      {{errors['name']}}
     </div>
   </div>
 
@@ -20,10 +27,10 @@
       Invalid email
     </div>
     <div
-      *ngIf="errors && errors.email"
+      *ngIf="errors['email']"
       class="input-error"
     >
-      Invalid email
+      {{errors['email']}}
     </div>
   </div>
 
@@ -42,6 +49,12 @@
     >
       Invalid password
     </div>
+    <div
+      *ngIf="errors['password']"
+      class="input-error"
+    >
+      {{errors['password']}}
+    </div>
   </div>
 
   <div>
@@ -59,11 +72,16 @@
     >
       Passwords don't match
     </div>
+    <div
+      *ngIf="errors['password_confirmation']"
+      class="input-error"
+    >
+      {{errors['password_confirmation']}}
+    </div>
   </div>
 
   <div class="buttons">
     <a [routerLink]="['/login']">Login</a>
-    <button type="submit" class="form-button">Register</button>
+    <button type="submit" class="form-button" [disabled]="!registrationForm.valid">Register</button>
   </div>
 </form>
-<div *ngIf="message">{{message}}</div>

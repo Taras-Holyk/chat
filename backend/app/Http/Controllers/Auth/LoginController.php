@@ -50,7 +50,7 @@ class LoginController extends Controller
 
         return $token ? (new User(auth()->user()))->additional([
             'meta' => $this->respondWithToken($token)
-        ]) : response()->json(['error' => 'Unauthorized'], 401);
+        ]) : response()->json(['error' => 'Invalid email or password'], 400);
     }
 
     /**

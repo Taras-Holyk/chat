@@ -19,10 +19,16 @@
     >
       Invalid password
     </div>
+    <div
+      *ngIf="invalidCredentials"
+      class="input-error"
+    >
+      Invalid email or password
+    </div>
   </div>
 
   <div class="buttons">
     <a [routerLink]="['/register']">Registration</a>
-    <button type="submit" class="form-button">Login</button>
+    <button type="submit" class="form-button" [disabled]="!loginForm.valid">Login</button>
   </div>
 </form>

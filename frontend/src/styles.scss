@@ -5,7 +5,7 @@ body {
 
 .container {
   max-width: 768px;
-  margin: 0 auto 15px;
+  margin: 15px auto;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.2);
 }
 
@@ -47,4 +47,9 @@ body {
   margin: 2px 0;
   color: red;
   font-size: 12px;
+}
+
+.text-green {
+  text-align: center;
+  color: green;
 }

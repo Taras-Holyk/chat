@@ -9,7 +9,6 @@ import { LoginComponent } from './components/login/login.component';
 import { RequestInterceptor } from './request.interceptor';
 import { AuthGuard } from './auth.guard';
 import { RegistrationComponent } from './components/registration/registration.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './components/header/header.component';
 
@@ -18,7 +17,6 @@ import { HeaderComponent } from './components/header/header.component';
     AppComponent,
     LoginComponent,
     RegistrationComponent,
-    DashboardComponent,
     HeaderComponent
   ],
   imports: [

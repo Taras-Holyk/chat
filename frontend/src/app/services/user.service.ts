@@ -12,7 +12,7 @@ export class UserService {
     return this.http.post<any>(`${environment.api_url}/login`, {email, password});
   }
 
-  register(data: Object) {
+  register(data: any) {
     return this.http.post<any>(`${environment.api_url}/register`, data);
   }
 

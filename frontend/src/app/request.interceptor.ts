@@ -3,7 +3,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Observable, of } from 'rxjs';
 import { LocalStorageService } from './services/local-storage.service';
 import { Router } from '@angular/router';
-import { catchError } from 'rxjs/operators';
+import {catchError, tap} from 'rxjs/operators';
 
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
@@ -17,13 +17,18 @@ export class RequestInterceptor implements HttpInterceptor {
         }
       });
     }
-    return next.handle(request).pipe(catchError((error, caught) => {
-      if (error instanceof HttpErrorResponse) {
-        if (error.status === 401) {
-          this.router.navigate(['/login']);
-        }
-      }
-      return of(error);
-    }) as any);
+
+    return next.handle(request)
+      .pipe(
+        tap(event => {},
+          error => {
+            if (error instanceof HttpErrorResponse) {
+              if (error.status === 401) {
+                this.router.navigate(['/login']);
+              }
+            }
+          }
+        )
+      );
   }
 }

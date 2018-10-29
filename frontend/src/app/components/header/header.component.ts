@@ -4,6 +4,7 @@ import {User} from '../../models/user';
 import {LocalStorageService} from '../../services/local-storage.service';
 import {takeWhile} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {BroadcastService} from '../../services/broadcast.service';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isVisible = true;
   constructor(private usersService: UserService,
               private localStorageService: LocalStorageService,
-              private router: Router) { }
+              private router: Router,
+              private broadcastService: BroadcastService) { }
 
   ngOnInit() {
     if (!this.localStorageService.get('authUser')) {
@@ -26,6 +28,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.usersService.getUser(this.localStorageService.get('authUser').id)
       .pipe(takeWhile(() => this.alive$))
       .subscribe(result => this.user = result.data);
+
+    this.broadcastService.subscribe('log-in', () => {
+      setTimeout(() => this.isVisible = true, 100);
+    });
   }
 
   ngOnDestroy() {
@@ -38,6 +44,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.localStorageService.remove('userAuthToken');
         this.localStorageService.remove('authUser');
+        this.isVisible = false;
         this.router.navigate(['/login']);
       });
   }

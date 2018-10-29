@@ -11,7 +11,7 @@ import {UserService} from '../../services/user.service';
 export class RegistrationComponent implements OnInit {
   registrationForm: FormGroup;
   message = '';
-  errors: any;
+  errors: any = [];
   constructor(private formBuilder: FormBuilder,
               private userService: UserService) {
     this.registrationForm = this.formBuilder.group({
@@ -23,6 +23,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.registrationForm.valueChanges.subscribe(() => this.errors = []);
   }
 
   submit() {
@@ -34,6 +35,11 @@ export class RegistrationComponent implements OnInit {
     this.userService.register(this.registrationForm.value)
       .subscribe(response => {
         this.message = 'Successfully registered';
-      }, error => console.log(error));
+
+        setTimeout(() => this.message = '', 3000);
+      }, response => {
+          this.errors = response.error.errors;
+        }
+      );
   }
 }
