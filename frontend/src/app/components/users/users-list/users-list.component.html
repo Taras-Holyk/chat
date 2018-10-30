@@ -3,6 +3,12 @@
   <button class="form-button" type="submit">Search</button>
 </form>
 <div class="users-list">
-  <app-user *ngFor="let user of users" [user]="user"></app-user>
+  <h3>Users list</h3>
+  <ng-container *ngIf="users.length">
+    <app-user *ngFor="let user of users" [user]="user"></app-user>
+  </ng-container>
+  <div *ngIf="!users.length">
+    Nothing more to show
+  </div>
 </div>
 <a class="show-more" (click)="showMore()" *ngIf="isEnabledShowMore">Show More</a>

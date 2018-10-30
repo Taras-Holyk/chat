@@ -1,4 +1,10 @@
 <div>
-  <app-chats-list-item *ngFor="let chat of chats" [chat]="chat"></app-chats-list-item>
+  <h3>Chats list</h3>
+  <ng-container *ngIf="chats.length">
+    <app-chats-list-item *ngFor="let chat of chats" [chat]="chat"></app-chats-list-item>
+  </ng-container>
+  <div *ngIf="!chats.length">
+    Nothing more to show
+  </div>
 </div>
 <a (click)="showMore()" *ngIf="isEnabledShowMore" class="show-more">Show more</a>

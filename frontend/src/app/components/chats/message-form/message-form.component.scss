@@ -7,5 +7,9 @@ form {
   .buttons {
     display: flex;
     justify-content: flex-end;
+
+    button {
+      cursor: pointer;
+    }
   }
 }
