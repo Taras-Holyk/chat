@@ -17,7 +17,7 @@ class ChatsRepository implements ChatsRepositoryInterface, StorableInterface
         $this->model = $model;
     }
 
-    public function getByUsersIds(array $usersIds)
+    public function getByUsersIds(array $usersIds) : ?Chat
     {
         return $this->model
             ->where('users', 'all', $usersIds)
